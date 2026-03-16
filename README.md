@@ -17,7 +17,7 @@ This project uses two public sources:
 - **IMDb**: movie-related information such as titles, genres, ratings, and vote counts
 - **TMDb**: additional metadata such as popularity, release date, original language, and other movie descriptors
 
-Using both sources allows the dataset to be enriched, which matches the project expectation for publicly available datasets.  [oai_citation:2‡DSA210_Spring2026_ProjectGuidelines.docx](sediment://file_000000001e60720a8d9c7b072d6230b3)
+Using both sources allows the dataset to be enriched, which matches the project expectation for publicly available datasets. 
 
 ## Main Objectives
 - Collect movie data from IMDb and TMDb
