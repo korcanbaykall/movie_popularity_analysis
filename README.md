@@ -6,7 +6,7 @@
 ## Overview
 This project aims to analyze and predict movie popularity by combining data from **IMDb** and **TMDb**. The main goal is to investigate how genres and other categorical movie features are associated with popularity, and whether these features can be used to build predictive models.
 
-This project is developed as part of the **DSA 210 Introduction to Data Science** term project. The course requires students to work individually, use Python, maintain a GitHub repository throughout the project, enrich publicly available data with another data source, and include both a `requirements.txt` file and a `README.md` with reproduction instructions.  [oai_citation:0‡DSA210_Spring2026_ProjectGuidelines.docx](sediment://file_000000001e60720a8d9c7b072d6230b3)  [oai_citation:1‡DSA210_Spring2026_ProjectGuidelines.docx](sediment://file_000000001e60720a8d9c7b072d6230b3)
+This project is developed as part of the **DSA 210 Introduction to Data Science** term project. The course requires students to work individually, use Python, maintain a GitHub repository throughout the project, enrich publicly available data with another data source, and include both a `requirements.txt` file and a `README.md` with reproduction instructions. 
 
 ## Motivation
 Movie success and popularity are influenced by many factors, including genre, release period, audience engagement, and metadata such as language or production-related attributes. By combining data from IMDb and TMDb, this project seeks to better understand which categorical features are most related to popularity and to explore whether movie popularity can be predicted from these variables.
