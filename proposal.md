@@ -1,8 +1,5 @@
 # DSA 210 Project Proposal
 
-**Name:** Korcan Baykal  
-**Project Title:** Movie Popularity Analysis  
-
 For my DSA 210 term project, I will analyze and predict movie popularity by combining data from IMDb and TMDb. The main goal of this project is to understand whether genres and other categorical movie features are related to popularity, and whether these features can be used to build predictive models. I chose this topic because movie success is influenced by many factors beyond ratings alone, such as genre, original language, release period, and other metadata.
 
 The data will be collected from two public sources. First, I will use IMDb’s non-commercial datasets, which are available as daily refreshed TSV files and include variables such as title type, release year, runtime, genres, average rating, and number of votes. Second, I will use the TMDb API to obtain additional movie metadata, including popularity scores, release details, original language, and other descriptive features. I plan to retrieve movie records from IMDb, query matching movies from TMDb, and merge the two sources into one analysis-ready dataset by using title names, release years, and available identifiers where possible. In this way, the IMDb dataset will be enriched with additional TMDb variables, satisfying the project requirement of extending a public dataset with another data source.
