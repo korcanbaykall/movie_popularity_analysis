@@ -21,8 +21,6 @@ Using both sources satisfies the project requirement to enrich publicly availabl
 
 ## Project Progress
 
-### Completed (Milestone 3 — April 14)
-
 **Data Collection and Cleaning:**
 - Loaded IMDb `title.basics` and `title.ratings` datasets
 - Filtered to movies only (non-adult), merged with ratings
