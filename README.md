@@ -48,9 +48,6 @@ All tests use significance level α = 0.05. Non-parametric tests were chosen bec
 | B: Popularity across top 5 genres | Kruskal-Wallis | **Reject H₀** — Popularity differs significantly across genres | p < 0.001 |
 | C: IMDb rating vs TMDb popularity | Spearman correlation | **Reject H₀** — Weak negative correlation (ρ = −0.14) | p < 0.001 |
 
-### Upcoming
-- **May 5:** Apply ML models (Random Forest, Gradient Boosting) to predict popularity
-- **May 18:** Final report and presentation
 
 ## Repository Structure
 ```
