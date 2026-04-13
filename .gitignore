@@ -1,3 +1,9 @@
+# macOS
+.DS_Store
+
+# Large raw data files (download separately, see data/raw/README.md)
+data/raw/title.basics.tsv.gz
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
