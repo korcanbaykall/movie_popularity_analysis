@@ -44,8 +44,8 @@ All tests use significance level α = 0.05. Non-parametric tests were chosen bec
 
 | Test | Method | Result | p-value |
 |------|--------|--------|---------|
-| A: Action vs non-Action popularity | Mann-Whitney U | **Reject H₀** — Action movies are significantly more popular (median 0.635 vs 0.364) | p < 0.001 |
-| B: Popularity across top 5 genres | Kruskal-Wallis | **Reject H₀** — Popularity differs significantly across genres | p < 0.001 |
+| A: Popularity across top 5 genres (main question) | Kruskal-Wallis | **Reject H₀** — Popularity differs significantly across genres | p < 0.001 |
+| B: Action vs non-Action popularity | Mann-Whitney U | **Reject H₀** — Action movies are significantly more popular (median 0.635 vs 0.364) | p < 0.001 |
 | C: IMDb rating vs TMDb popularity | Spearman correlation | **Reject H₀** — Weak negative correlation (ρ = −0.14) | p < 0.001 |
 
 
