@@ -1,12 +1,12 @@
 # AI Usage Disclosure
 
-This document describes my use of AI tools (Claude) during this project, as required by the DSA 210 course guidelines.
+This document describes my use of AI tools (Claude and ChatGPT) during this project, as required by the DSA 210 course guidelines.
 
 The AI was used in two specific areas: background research and the data collection approach. All analysis, interpretation of results, and writing of the final findings were done by me.
 
 ## 1. Research
 
-I used Claude to help me understand some methodological concepts before starting the analysis. Specifically:
+I used Claude and ChatGPT to help me understand some methodological concepts before starting the analysis. Specifically:
 
 - I asked about the difference between parametric and non-parametric hypothesis tests, and when each is appropriate. Based on that, I chose non-parametric tests (Mann-Whitney U, Kruskal-Wallis, Spearman) because the TMDb popularity variable is heavily right-skewed.
 - I asked for a short explanation of Spearman rank correlation vs Pearson correlation, to confirm why Spearman is more suitable for skewed data.
@@ -19,7 +19,7 @@ Example prompts I used:
 
 ## 2. Data Collection
 
-I used Claude to help me figure out the best way to pull data from the TMDb API and merge it with the IMDb dataset. Specifically:
+I used Claude and ChatGPT to help me figure out the best way to pull data from the TMDb API and merge it with the IMDb dataset. Specifically:
 
 - I asked how the TMDb `/find` endpoint works with an IMDb ID as an external source, which is the method I used to match each IMDb movie to its TMDb record.
 - I asked about rate limiting on the TMDb API and how to avoid being throttled when fetching ~2000 movies in a loop. Based on the suggestion, I added a small `time.sleep(0.25)` delay between requests.
