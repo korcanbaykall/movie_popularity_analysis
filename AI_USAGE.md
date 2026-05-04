@@ -30,22 +30,6 @@ Example prompts I used:
 - "What's a safe request rate for the TMDb API when I'm fetching 2000 records?"
 - "Which fields from the TMDb movie endpoint are worth keeping for a popularity analysis?"
 
-## 3. Machine Learning Section (§9 of the notebook)
-
-For Milestone 4 (5 May — apply ML on the dataset), I used Claude to help me structure the ML section of the notebook. Specifically:
-
-- I asked how to frame predicting a heavily right-skewed target (TMDb popularity), and was guided to model `log1p(popularity)` for regression and to also frame a binary "top 25% popular vs not" version for classification.
-- I asked whether including `numVotes` as a feature was a form of data leakage. The Spearman correlation between `numVotes` and TMDb popularity is 0.62, so it is essentially a popularity proxy. I decided to evaluate two feature sets side by side — a "full" set including votes/rating and a "metadata-only" set without them — so that the metadata-only result corresponds to the actual question my proposal asks (whether categorical features alone predict popularity).
-- I asked which scikit-learn models are reasonable for a small (~968 row) tabular task and got a baseline / linear / Random Forest / Gradient Boosting comparison plus 5-fold cross-validation.
-- I asked how to handle class imbalance in the classification task (~25% popular). Based on the suggestion I added `class_weight='balanced'` to Logistic Regression and Random Forest; recall on the popular class went from ~0.48 to ~0.65 on the full feature set with only a small AUC change.
-- I asked for a small, reasonable `GridSearchCV` grid for the Gradient Boosting regressor (`n_estimators`, `max_depth`, `learning_rate`) and used 5-fold inner CV with the held-out test set untouched for the final number.
-
-Example prompts I used:
-- "Why log1p the target if popularity is right-skewed?"
-- "Is it a problem to use numVotes as a feature when predicting TMDb popularity?"
-- "How do I handle the imbalanced popular class in scikit-learn?"
-- "Suggest a small GridSearchCV grid for GradientBoostingRegressor on a ~1000-row dataset."
-
 ## Scope of AI Use
 
-The AI was used for methodological guidance, code structure suggestions, and explanations of when each technique is appropriate. The interpretation of results, the decision to evaluate two feature sets side by side, the decision to keep the proposal-aligned metadata-only set as the headline result, and the final conclusions in the summary section reflect my own work. All code was reviewed and run by me.
+The AI was not used to write the final analysis, decide which hypotheses to test, interpret the results, or produce the conclusions in the report. Those parts reflect my own work. The code for EDA, hypothesis tests and the final analysis was written and run by me.
