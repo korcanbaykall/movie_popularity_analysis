@@ -23,7 +23,7 @@ Using both sources satisfies the project requirement to enrich publicly availabl
 
 **Data Collection and Cleaning:**
 - Loaded IMDb `title.basics` and `title.ratings` datasets
-- Filtered to movies only (non-adult), merged with ratings
+- Filtered to movies only (general audience), merged with ratings
 - Cleaned types, dropped nulls and duplicates → **551,041 rows**
 - Enriched 2,000 sampled movies with TMDb API data (popularity, language, genres, vote counts)
 
@@ -48,6 +48,29 @@ All tests use significance level α = 0.05. Non-parametric tests were chosen bec
 | B: Action vs non-Action popularity | Mann-Whitney U | **Reject H₀** — Action movies are significantly more popular (median 0.635 vs 0.364) | p < 0.001 |
 | C: IMDb rating vs TMDb popularity | Spearman correlation | **Reject H₀** — Weak negative correlation (ρ = −0.14) | p < 0.001 |
 
+**Machine Learning (§9 of the notebook):**
+
+968 movies with all features non-null are used. Feature engineering: numeric (`runtimeMinutes`, `averageRating`, `log_numVotes`, `startYear`), decade bucket, top-8 original languages, multi-hot genre flags. 80/20 train-test split, stratified on the classification target, `random_state=42`.
+
+Regression target: `log1p(popularity)`. Classification target: top 25% popularity (= "popular").
+
+| Task | Model | Test metric (best) |
+|------|-------|--------------------|
+| Regression | Gradient Boosting | R² = 0.594, MAE = 0.146, RMSE = 0.208 (baseline R² = −0.07) |
+| Regression | Random Forest | R² = 0.578 |
+| Regression | Linear Regression | R² = 0.554 |
+| Classification | Gradient Boosting | ROC-AUC = 0.875, accuracy = 0.845, F1 = 0.643 |
+| Classification | Random Forest | ROC-AUC = 0.866 |
+| Classification | Logistic Regression | ROC-AUC = 0.859 |
+
+Top features driving popularity (Gradient Boosting importances): `log_numVotes` and `averageRating` dominate, followed by `runtimeMinutes` and a few genre flags. Decade and language contribute marginally.
+
+| Figure | Description |
+|--------|-------------|
+| ![Predicted vs Actual](figures/ml_pred_vs_actual.png) | Predicted vs actual `log1p(popularity)` per regressor |
+| ![Feature Importance](figures/ml_feature_importance.png) | Top 15 Gradient Boosting feature importances |
+| ![ROC Curves](figures/ml_roc_curves.png) | ROC curves for the three classifiers |
+| ![Confusion Matrix](figures/ml_confusion_matrix.png) | Confusion matrix for the best classifier |
 
 ## Repository Structure
 ```
@@ -75,7 +98,11 @@ movie_popularity_analysis/
     ├── votes_vs_popularity.png
     ├── top10_languages.png
     ├── popularity_log_hist.png
-    └── genre_popularity_boxplot.png
+    ├── genre_popularity_boxplot.png
+    ├── ml_pred_vs_actual.png
+    ├── ml_feature_importance.png
+    ├── ml_roc_curves.png
+    └── ml_confusion_matrix.png
 ```
 
 ## How to Reproduce
@@ -108,5 +135,6 @@ movie_popularity_analysis/
 - pandas, numpy — data manipulation
 - matplotlib — visualization
 - scipy — hypothesis testing
+- scikit-learn — ML models and evaluation
 - requests — TMDb API calls
 - jupyter — notebook environment
