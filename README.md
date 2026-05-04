@@ -50,27 +50,43 @@ All tests use significance level α = 0.05. Non-parametric tests were chosen bec
 
 **Machine Learning (§9 of the notebook):**
 
-968 movies with all features non-null are used. Feature engineering: numeric (`runtimeMinutes`, `averageRating`, `log_numVotes`, `startYear`), decade bucket, top-8 original languages, multi-hot genre flags. 80/20 train-test split, stratified on the classification target, `random_state=42`.
+968 movies with all features non-null are used. 80/20 train-test split, stratified on the classification target, `random_state=42`. 5-fold cross-validation on the training set checks stability.
 
-Regression target: `log1p(popularity)`. Classification target: top 25% popularity (= "popular").
+**Two feature sets are evaluated side by side:**
 
-| Task | Model | Test metric (best) |
-|------|-------|--------------------|
-| Regression | Gradient Boosting | R² = 0.594, MAE = 0.146, RMSE = 0.208 (baseline R² = −0.07) |
-| Regression | Random Forest | R² = 0.578 |
-| Regression | Linear Regression | R² = 0.554 |
-| Classification | Gradient Boosting | ROC-AUC = 0.875, accuracy = 0.845, F1 = 0.643 |
-| Classification | Random Forest | ROC-AUC = 0.866 |
-| Classification | Logistic Regression | ROC-AUC = 0.859 |
+- **Full features** — `runtimeMinutes`, `averageRating`, `log_numVotes`, `startYear`, decade, top-8 language, multi-hot genres.
+- **Metadata-only** — same set with `averageRating` and `log_numVotes` removed. `numVotes` correlates 0.62 (Spearman) with popularity and is essentially a popularity proxy; the metadata-only set is the one that matches the proposal's framing ("can categorical features alone predict popularity?").
 
-Top features driving popularity (Gradient Boosting importances): `log_numVotes` and `averageRating` dominate, followed by `runtimeMinutes` and a few genre flags. Decade and language contribute marginally.
+**Regression — predicting `log1p(popularity)`** (4 models per feature set: median baseline, Linear Regression, Random Forest, Gradient Boosting). Best model per feature set on the held-out test set:
+
+| Feature set | Best model | R² | MAE | RMSE | CV R² |
+|---|---|---|---|---|---|
+| Full | Gradient Boosting | **0.594** | 0.146 | 0.208 | 0.490 |
+| Metadata-only | Random Forest | **0.306** | 0.197 | 0.272 | 0.177 |
+| Metadata-only (tuned GB, GridSearchCV) | Gradient Boosting | **0.319** | 0.196 | 0.272 | 0.177 |
+| Either | Median baseline | −0.066 | 0.229 | 0.337 | — |
+
+Tuned GB on metadata-only used `n_estimators=200, max_depth=2, learning_rate=0.05` (best of a 3 × 2 × 3 grid). The ~0.28 R² gap between the two feature sets is the share of predictive power carried by `numVotes` as a popularity proxy.
+
+**Classification — popular (top 25%) vs not** (Logistic Regression and Random Forest use `class_weight='balanced'` to handle the 25/75 imbalance):
+
+| Feature set | Best model | Accuracy | Precision | Recall | F1 | ROC-AUC |
+|---|---|---|---|---|---|---|
+| Full | Random Forest | 0.856 | 0.738 | 0.646 | 0.689 | **0.878** |
+| Full | Gradient Boosting | 0.845 | 0.750 | 0.562 | 0.643 | 0.875 |
+| Metadata-only | Random Forest | 0.789 | 0.581 | 0.521 | 0.549 | **0.801** |
+
+Class balancing brings popular-class recall up from ~0.48 (unweighted) to 0.65 on the full feature set, with only a ~1 point AUC change.
+
+**Top features (Gradient Boosting):** Full set is dominated by `log_numVotes`, then `averageRating`. Metadata-only set leans on `runtimeMinutes`, `startYear`, and a small genre cluster (`Documentary`, `Thriller`, `Action`, `Sci-Fi`); Japanese-language and English-language flags also matter.
 
 | Figure | Description |
 |--------|-------------|
-| ![Predicted vs Actual](figures/ml_pred_vs_actual.png) | Predicted vs actual `log1p(popularity)` per regressor |
-| ![Feature Importance](figures/ml_feature_importance.png) | Top 15 Gradient Boosting feature importances |
-| ![ROC Curves](figures/ml_roc_curves.png) | ROC curves for the three classifiers |
-| ![Confusion Matrix](figures/ml_confusion_matrix.png) | Confusion matrix for the best classifier |
+| ![Predicted vs Actual (full)](figures/ml_pred_vs_actual_full.png) | Predicted vs actual `log1p(popularity)` per regressor — full features |
+| ![Predicted vs Actual (metadata)](figures/ml_pred_vs_actual_meta.png) | Predicted vs actual — metadata-only features |
+| ![Feature Importance](figures/ml_feature_importance.png) | Top 15 Gradient Boosting feature importances, full vs metadata-only |
+| ![ROC Curves](figures/ml_roc_curves.png) | ROC curves for the three classifiers, full vs metadata-only |
+| ![Confusion Matrix](figures/ml_confusion_matrix.png) | Confusion matrices for the best classifier on each feature set |
 
 ## Repository Structure
 ```
@@ -99,7 +115,8 @@ movie_popularity_analysis/
     ├── top10_languages.png
     ├── popularity_log_hist.png
     ├── genre_popularity_boxplot.png
-    ├── ml_pred_vs_actual.png
+    ├── ml_pred_vs_actual_full.png
+    ├── ml_pred_vs_actual_meta.png
     ├── ml_feature_importance.png
     ├── ml_roc_curves.png
     └── ml_confusion_matrix.png
