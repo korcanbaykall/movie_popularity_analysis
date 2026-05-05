@@ -14,7 +14,7 @@ Movie success and popularity are influenced by many factors, including genre, re
 ## Data Sources
 This project uses two public sources:
 
-- **IMDb Non-Commercial Datasets** ([datasets.imdbws.com](https://datasets.imdbws.com/)): movie metadata including titles, genres, year, runtime, user ratings, and vote counts. ~551,000 movies after cleaning.
+- **IMDb Non-Commercial Datasets** ([datasets.imdbws.com](https://datasets.imdbws.com/)): movie metadata including titles, genres, year, runtime, user ratings, and vote counts. ~553,000 movies after cleaning.
 - **TMDb API** ([themoviedb.org](https://www.themoviedb.org/)): additional metadata including popularity scores, release dates, original language, and genre classifications. 2,000 movies sampled and enriched via API.
 
 Using both sources satisfies the project requirement to enrich publicly available data with another data source.
@@ -24,7 +24,7 @@ Using both sources satisfies the project requirement to enrich publicly availabl
 **Data Collection and Cleaning:**
 - Loaded IMDb `title.basics` and `title.ratings` datasets
 - Filtered to movies only (general audience), merged with ratings
-- Cleaned types, dropped nulls and duplicates → **551,041 rows**
+- Cleaned types, dropped nulls and duplicates → **553,802 rows**
 - Enriched 2,000 sampled movies with TMDb API data (popularity, language, genres, vote counts)
 
 **Exploratory Data Analysis:**
@@ -63,10 +63,10 @@ All tests use significance level α = 0.05. Non-parametric tests were chosen bec
 |---|---|---|---|---|---|
 | Full | Gradient Boosting | **0.594** | 0.146 | 0.208 | 0.490 |
 | Metadata-only | Random Forest | **0.306** | 0.197 | 0.272 | 0.177 |
-| Metadata-only (tuned GB, GridSearchCV) | Gradient Boosting | **0.319** | 0.196 | 0.272 | 0.177 |
+| Metadata-only (tuned GB, GridSearchCV) | Gradient Boosting | **0.319** | 0.196 | 0.269 | 0.177 |
 | Either | Median baseline | −0.066 | 0.229 | 0.337 | — |
 
-Tuned GB on metadata-only used `n_estimators=200, max_depth=2, learning_rate=0.05` (best of a 3 × 2 × 3 grid). The ~0.28 R² gap between the two feature sets is the share of predictive power carried by `numVotes` as a popularity proxy.
+Tuned GB on metadata-only used `n_estimators=200, max_depth=2, learning_rate=0.05` (best of a 2 × 3 × 3 grid). The ~0.28 R² gap between the two feature sets is the share of predictive power carried by `numVotes` as a popularity proxy.
 
 **Classification — popular (top 25%) vs not** (Logistic Regression and Random Forest use `class_weight='balanced'` to handle the 25/75 imbalance):
 
@@ -100,7 +100,7 @@ movie_popularity_analysis/
 │   │   ├── title.ratings.tsv.gz
 │   │   └── README.md
 │   └── processed/                    # Cleaned datasets
-│       ├── movies_imdb_cleaned.csv   # 551K movies from IMDb
+│       ├── movies_imdb_cleaned.csv   # 553K movies from IMDb
 │       └── movies_imdb_tmdb_2000.csv # 2K movies enriched with TMDb
 ├── notebooks/
 │   └── DSA210_Movie_Popularity_Analysis.ipynb
