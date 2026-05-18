@@ -48,7 +48,7 @@ All tests use significance level α = 0.05. Non-parametric tests were chosen bec
 | B: Action vs non-Action popularity | Mann-Whitney U | **Reject H₀** — Action movies are significantly more popular (median 0.635 vs 0.364) | p < 0.001 |
 | C: IMDb rating vs TMDb popularity | Spearman correlation | **Reject H₀** — Weak negative correlation (ρ = −0.14) | p < 0.001 |
 
-**Machine Learning (§9 of the notebook):**
+**Machine Learning (section 9 of the notebook):**
 
 968 movies with all features non-null are used. 80/20 train-test split, stratified on the classification target, `random_state=42`. 5-fold cross-validation on the training set checks stability.
 
